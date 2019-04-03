@@ -12,4 +12,7 @@ Early prototype.
 See https://github.com/alexykot/brick-lang-poc/blob/master/README.md
 
 ## Next steps
-- prepare parser prototype development
+- ~~prepare parser prototype development~~
+- define tasks and goals of the parser
+- design high level architecture
+- design parser library interface
