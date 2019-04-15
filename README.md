@@ -22,14 +22,16 @@ positional argument
 full tree of project files
  
 ### Process
-- grab starting file
-- recursively traverse all imports and build a single megaobject 
+- ~~grab starting file~~
+- ~~recursively traverse all imports and build a single megaobject~~ 
 - recursively run structure validations on every object
 - save references to all binary files and check if they exist
 - output all structure errors, missing imports or broken references
 
 ### Limitations
 - we are not worried about performance in the PoC
+- we are not worried about architecture in the PoC 
+(megaobject will have to go later)
 - we only load from local storage, no external dependencies yet
 - 3D models contents is not validated, only file presence checked
 
