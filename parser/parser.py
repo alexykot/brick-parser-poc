@@ -18,37 +18,40 @@ def parse(file_path: str) -> dict:
 
 def _parse_file(file_path: str) -> dict:
     root = {}
+    file_path = os.path.normpath(file_path)
+    file_path = os.path.abspath(file_path)
     try:
         with open(file_path, 'r') as file:
             file_body = file.read()
+
+            # replace yaml-illegal `@` references with `__$`
             file_body = re.sub(
                 r"([\s]*[a-zA-Z0-9_\-\s]+[:]?\s)@([a-zA-Z0-9_:]+)",
                 r"\1__$\2", file_body)
             root = yaml.load(file_body, yaml.SafeLoader)
             root['selfpath'] = os.path.normpath(file_path)
-            _load_imports(root)     # modifies the source object
-            _load_binaries(root)    # modifies the source object
-            _normalise_sizes(root)    # modifies the source object
+            _load_imports(root)
+            _load_binaries(root)
+            _normalise_sizes(root)
 
     except FileNotFoundError:
-        log.error(f'file {file_path} not found, exiting')
-        exit(1)
+        log.error(f'model file {file_path} not found')
 
     return root
 
 
-def _validate(document: dict, schema: str) -> dict:
+def _validate_object(obj: dict, schema: str) -> dict:
     """ will throw if validations fails """
 
     # @TODO schema based validations here
-    return document
+    return obj
 
 
 def _load_imports(file_obj: dict):
     """ modifies given object, loads all imports, triggers recursive parsing """
 
     for i, import_item in enumerate(file_obj.get('imports', [])):
-        _validate(import_item, C.SCHEMA.IMPORTS)
+        _validate_object(import_item, C.SCHEMA.IMPORTS)
 
         file_obj['imports'][i]['module'] = _parse_file(
             os.path.join(os.path.dirname(file_obj['selfpath']),
@@ -58,16 +61,18 @@ def _load_imports(file_obj: dict):
 def _load_binaries(file_obj: dict):
     """
     modifies given object, checks part binaries existence
-    does not load anything yet
+    does not read or load in memory anything yet
     """
 
     if file_obj.get('part') and file_obj['part'].get('model'):
-        model_file = file_obj['part']['model'].get('file')
-        model_filepath = os.path.join(file_obj['selfpath'], model_file)
-        file_obj['part']['model']['file'] = os.path.normpath(model_filepath)
+        bin_file = file_obj['part']['model'].get('file')
+        bin_filepath = os.path.join(file_obj['selfpath'], bin_file)
+        bin_filepath = os.path.normpath(bin_filepath)
+        bin_filepath = os.path.abspath(bin_filepath)
+        file_obj['part']['model']['file'] = bin_filepath
 
-        if not os.path.exists(model_filepath):
-            log.debug(f'model file not found {model_filepath}')
+        if not os.path.exists(bin_filepath):
+            log.error(f'binary file not found {bin_filepath}')
 
         # @TODO actually load DFX binaries
 
@@ -81,15 +86,15 @@ def _normalise_sizes(file_obj: dict):
         if isinstance(branch, dict):
             for node in branch:
                 if node == 'position':
-                    _validate(branch[node], C.SCHEMA.POSITION)
-                    _normalise(branch[node], source_unit)
+                    _validate_object(branch[node], C.SCHEMA.POSITION)
+                    __normalise(branch[node], source_unit)
                 else:
                     _find_positions(branch[node], source_unit)
         if isinstance(branch, list):
             for i, node in enumerate(branch):
                 _find_positions(branch[i], source_unit)
 
-    def _normalise(position: dict, source_unit):
+    def __normalise(position: dict, source_unit):
         if position.get('x'):
             if isinstance(position['x'], dict):
                 position['x']['min'] = position['x']['min'] * C.UNITS[source_unit]
