@@ -22,19 +22,29 @@ positional argument
 full tree of project files
  
 ### Process
-- grab starting file
-- recursively traverse all imports and build a single megaobject 
-- recursively run structure validations on every object
-- save references to all binary files and check if they exist
-- output all structure errors, missing imports or broken references
+- ~~grab starting file~~
+- ~~recursively traverse all imports and build a single megaobject~~
+- ~~normalise all metric values~~ 
+- ~~save references to all binary files and check if they exist~~
+- ~~output all missing imports or broken references~~
 
 ### Limitations
 - we are not worried about performance in the PoC
+- we are not worried about architecture in the PoC
+(megaobject will have to go later)
+- we are not doing any structure validations in the PoC
 - we only load from local storage, no external dependencies yet
 - 3D models contents is not validated, only file presence checked
 
 ## Next steps
 - ~~prepare parser prototype development~~
 - ~~define tasks and goals of the parser~~
-- design high level architecture
-- design parser library interface
+- use basic STL example and figure out how to work with it in Python
+- create pipeline for web rendering of STL models
+- create STLs for all _hello house_ parts
+- import all STLs together
+- create overall frame model using default settings
+- render full frame
+- create a way to render parameter controls
+- allow to adjust parameters
+- create basic intersection checks
