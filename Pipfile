@@ -18,6 +18,7 @@ psycopg2-binary         = "*"
 pyyaml                  = "*"
 cerberus                = "*"
 invoke                  = "*"
+numpy-stl               = "*"
 
 [requires]
 python_version = "3.7"

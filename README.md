@@ -39,9 +39,9 @@ full tree of project files
 ## Next steps
 - ~~prepare parser prototype development~~
 - ~~define tasks and goals of the parser~~
-- use basic STL example and figure out how to work with it in Python
+- ~~use basic STL and figure out how to work with it in Python and JS~~
 - create pipeline for web rendering of STL models
-- create STLs for all _hello house_ parts
+- get/create STLs for all _hello house_ parts
 - import all STLs together
 - create overall frame model using default settings
 - render full frame
