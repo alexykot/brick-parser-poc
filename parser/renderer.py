@@ -11,6 +11,14 @@ def create_stl(filename):
     return _combine_stl(filename)
 
 
+def create_ascii(filename):
+    binary = mesh.Mesh.from_file(filename)
+    ascii_filename = f'{filename[:-4]}.ascii.stl'
+    binary.save(ascii_filename, mode=stl.Mode.ASCII)
+
+    return ascii_filename
+
+
 def _combine_stl(filename: str):
     main_body = mesh.Mesh.from_file(filename)
 
