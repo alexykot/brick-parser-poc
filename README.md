@@ -40,6 +40,7 @@ full tree of project files
 - ~~prepare parser prototype development~~
 - ~~define tasks and goals of the parser~~
 - ~~use basic STL and figure out how to work with it in Python and JS~~
+- redesign the parser with better usability
 - create pipeline for web rendering of STL models
 - get/create STLs for all _hello house_ parts
 - import all STLs together
@@ -48,3 +49,10 @@ full tree of project files
 - create a way to render parameter controls
 - allow to adjust parameters
 - create basic intersection checks
+
+## Parser redesign
+- create global dict of all parsed files
+- file dict key:value will be full_file_pathname:parsed_file_object
+- treat every file itself as module object
+- on file parsing resolve local imports into global import files list
+- save entrypoint, the topmost file to start with
