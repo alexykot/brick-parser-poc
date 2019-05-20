@@ -12,5 +12,5 @@ def parse(ctx, file):
     # print(yaml.dump(result))
 
 
-parser_collection = Collection('parser')
+parser_collection = Collection('parse')
 parser_collection.add_task(parse, default=True)

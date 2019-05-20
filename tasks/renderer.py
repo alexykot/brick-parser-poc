@@ -4,18 +4,18 @@ from invoke import task, Collection
 @task
 def create_stl(ctx, file):
     """ copypaste STL 8 times into new STL - `inv stl <path-to-stl-file>` """
-    from parser import renderer
+    from parser import composer
 
-    result = renderer.create_stl(file)
+    result = composer.create_stl(file)
     print(f'{result} created')
 
 
 @task
 def convert_to_ascii(ctx, file):
     """ Convert STL to ASCII - `inv ascii <path-to-stl-file>` """
-    from parser import renderer
+    from parser import composer
 
-    result = renderer.create_ascii(file)
+    result = composer.create_ascii(file)
     print(f'{result} created')
 
 

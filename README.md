@@ -51,8 +51,8 @@ full tree of project files
 - create basic intersection checks
 
 ## Parser redesign
-- create global dict of all parsed files
+- create global dict index of all parsed files
 - file dict key:value will be full_file_pathname:parsed_file_object
 - treat every file itself as module object
-- on file parsing resolve local imports into global import files list
+- on file parsing resolve local imports into global imports from index
 - save entrypoint, the topmost file to start with
